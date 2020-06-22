@@ -1,6 +1,5 @@
 import discord, jishaku
 from discord.ext import commands
-from discord.ext.commands import has_permissions
 from time import sleep
 
 hid=666317117154525185

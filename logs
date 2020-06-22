@@ -1,0 +1,2 @@
+#!/bin/bash
+docker logs cc_bot_1

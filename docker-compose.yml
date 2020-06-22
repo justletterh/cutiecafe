@@ -5,7 +5,7 @@ services:
     restart: always
     entrypoint: python3 -u /app/bot.py
     volumes:
-      - "./:/app"
+      - "./backups:/app"
     environment:
       - "JISHAKU_HIDE=True"
       - "JISHAKU_NO_UNDERSCORE=True"

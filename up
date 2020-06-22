@@ -1,2 +1,14 @@
 #!/bin/bash
+if [ -f "./backups/bot.py" ]; then
+	rm ./backups/bot.py
+fi
+if [ -f "./backups/Dockerfile" ]; then
+	rm ./backups/Dockerfile
+fi
+if [ -f "./backups/docker-compose.yml" ]; then
+	rm ./backups/docker-compose.yml
+fi
+cp ./bot.py ./backups/bot.py
+cp ./Dockerfile ./backups/Dockerfile
+cp ./docker-compose.yml ./backups/docker-compose.yml
 docker-compose -f /root/cc/docker-compose.yml up -d

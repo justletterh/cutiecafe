@@ -4,46 +4,32 @@ from time import sleep
 
 hid=666317117154525185
 did=676454199742955530
+lid=701254727534510129
+owners=[hid,did,lid]
 status="— ୨୧ 𝐬𝐧𝐮𝐠𝐠𝐥𝐢𝐧’ 𝐭𝐡𝐞 𝐜𝐮𝐭𝐢𝐞 𝐩𝐢𝐞𝐬! ₓ˚. ୭ ˚○◦"
-join="""<@&689140834200846374>
-───────────────────
-˗ˏˋ $USER has arrived to the cafe!! ♡ˎˊ˗
+join="""\U00002601 . . . ⇢ ˗ˏˋ <@&689140834200846374> ࿐ྂ
+ 
+**welcome sweetheart!! please verify to gain access to the rest of the server!** <:b_powheart:727644834265038918> <:b_teddy:727644836819107860> <:b_powheart:727644834265038918> 
 
-· · ─────── ·𖥸· ─────── · ·
+<:b_wingies2:727644834806104124> **get some roles in** <a:b_arrow:727644833597882459> <#650563103699763240> 
 
-❝ tips on how to verify !
+<:b_wingies2:727644834806104124>  **make an intro in** <a:b_arrow:727644833597882459> <#650562789546655790> 
 
-♡ ⋮꒱ <#650562789546655790> : make an intro !
+<:b_wingies2:727644834806104124> **read and react to the triggers and rules list** <a:b_arrow:727644833597882459> <#662158949239226388> + <#668220102482722821> 
 
- ♡ ⋮꒱  <#650563103699763240> : get your roles ! 
+<:b_wingies2:727644834806104124> **ping staff in** <a:b_arrow:727644833597882459> <#694558376029454386>
 
-♡ ⋮꒱  <#668220102482722821> + <#662158949239226388> : react to the rules n triggers list ! 
-
- ━ when you're all done, ping @​ ♡. staffies in <#694558376029454386>  ! 
-· · ─────── ·𖥸· ─────── · · 
-:cloud:  ʚ have fun cutie, and welcome to the cafe~ ɞ"""
-leave= """
-° 𐐪𐑂 ♡ 𐐪𐑂 ₒ 𐐪𐑂 ♡ 𐐪𐑂 °
-**˚‧º·(˚ ˃̣̣̥⌓˂̣̣̥ )‧º·˚ — o nuu! $USER just left the server! we wish you well, cutie pie!
- ( ˘ ³˘)♡**
-° 𐐪𐑂 ♡ 𐐪𐑂 ₒ 𐐪𐑂 ♡ 𐐪𐑂 °
-https://gph.is/1n6h5lm
-"""
+<a:b_butterflies:727644835023945778> — **and have loads of fun, $USER!**"""
+leave= """<a:B4562AEA046F4DB6B1892479B9ADA72D:727644835023945778> — **oh no!! an angel named $USER left us :c god speed little angel. god speed.** <:5CD871E9E3E34685A9E579DA3BC0D982:727644834265038918>"""
 welcomechan=650560380271067148
 color=0xf8dfea
+def isown(usr):
+    if usr.id in owners:
+        return True
+    else:
+        return False
 
-def date(s):
-    months={'01':"January",'02':"Febuary",'03':"March",'04':"April",'05':"May",'06':"June",'07':"July",'08':"August",'09':"September",'10':"October",'11':"November",'12':"December"}
-    s=s[0:len(s)-7]
-    d=s.split()[0]
-    d=d.split("-")
-    d=f"on {months[str(d[1])]} {d[2]} of {d[0]}"
-    t=s.split()[1]
-    t=t.split(":")
-    t=f" at {t[0]}:{t[1]} and {t[2]} seconds"
-    return d+t
-
-bot = commands.Bot(command_prefix='~',owner_ids=[hid,did])
+bot = commands.Bot(command_prefix='~',owner_ids=owners)
 bot.remove_command('help')
 
 @bot.event
@@ -52,37 +38,49 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-    await bot.get_channel(welcomechan).send(content=join.replace("$USER",member.mention))
+    with open('./app/join.gif', 'rb') as fp:
+        await bot.get_channel(welcomechan).send(content=join.replace("$USER",member.mention),file=discord.File(fp,"join.gif"))
 @bot.event
 async def on_member_remove(member):
-    await bot.get_channel(welcomechan).send(content=leave.replace("$USER",f"@{member.name}#{member.discriminator}"))
+    with open('./app/leave.gif', 'rb') as fp:
+        await bot.get_channel(welcomechan).send(content=leave.replace("$USER",f"@{member.name}#{member.discriminator}"),file=discord.File(fp,"leave.gif"))
+
+@bot.event
+async def on_message(message):
+    if ("h " in message.content.lower() or "hh" in message.content.lower() or message.content.lower()=="h") and message.author.id==hid:
+        await message.channel.send(content="h")
+    await bot.process_commands(message)
 
 @bot.command(name='join')
 @commands.is_owner()
 async def _join(ctx):
-    if ctx.author.id == hid:
-        await bot.get_channel(welcomechan).send(content=join.replace("$USER",ctx.author.mention))
-        await ctx.send(content="Done!")
+    with open('./app/join.gif', 'rb') as fp:
+        await bot.get_channel(welcomechan).send(content=join.replace("$USER",ctx.author.mention),file=discord.File(fp,"join.gif"))
+    await ctx.send(content="Done!")
 @bot.command(name='leave')
 @commands.is_owner()
 async def _leave(ctx):
-    if ctx.author.id == hid:
-        await bot.get_channel(welcomechan).send(content=leave.replace("$USER",f"@{ctx.author.name}#{ctx.author.discriminator}"))
-        await ctx.send(content="Done!")
+    with open('./app/leave.gif', 'rb') as fp:
+       await bot.get_channel(welcomechan).send(content=leave.replace("$USER",f"@{ctx.author.name}#{ctx.author.discriminator}"),file=discord.File(fp,"leave.gif"))
+    await ctx.send(content="Done!")
 @bot.command(name='say')
 @commands.is_owner()
 async def _say(ctx, *, arg):
     await ctx.send(content=arg)
     await ctx.message.delete()
-
 @bot.command()
-async def whois(ctx, arg):
-    usr=await bot.fetch_user(arg)
-    e=discord.Embed(title="Member Info",description=f"@{usr.name}#{usr.discriminator} <{usr.id}>",color=color)
-    e.set_thumbnail(url=usr.avatar_url)
-    e.add_field(name="Created At",value=f"{date(str(usr.created_at))}")
-    await ctx.send(embed=e)
-
+@commands.is_owner()
+async def tst(ctx):
+	await ctx.send(content=join)
+@bot.command(name='fetchmsg')
+@commands.is_owner()
+async def _msg(ctx, arg):
+	arg=int(arg)
+	m=await ctx.channel.fetch_message(arg)
+	await ctx.send(content=f"\U00000060\U00000060\U00000060{m.content}\U00000060\U00000060\U00000060")
 
 bot.load_extension('jishaku')
-bot.run('TOKEN_HERE')
+bot.load_extension("utils")
+bot.load_extension("misc")
+bot.load_extension("voice")
+bot.run('BOT_TOKEN_HERE')

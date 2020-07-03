@@ -9,8 +9,20 @@ fi
 if [ -f "./backups/docker-compose.yml" ]; then
 	rm ./backups/docker-compose.yml
 fi
+if [ -f "./backups/utils.py" ]; then
+	rm ./backups/utils.py
+fi
+if [ -f "./backups/voice.py" ]; then
+	rm ./backups/voice.py
+fi
+if [ -f "./backups/misc.py" ]; then
+	rm ./backups/misc.py
+fi
 echo -e "...\n...\n..."
+cp ./misc.py ./backups/misc.py
 cp ./bot.py ./backups/bot.py
 cp ./Dockerfile ./backups/Dockerfile
 cp ./docker-compose.yml ./backups/docker-compose.yml
+cp ./utils.py ./backups/utils.py
+cp ./voice.py ./backups/voice.py
 echo "done!!!"
